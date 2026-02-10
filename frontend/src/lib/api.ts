@@ -1,4 +1,5 @@
 import type { Profile, ProfilePayload } from "@/types/profile";
+import type { MealRecord, MealRecordPayload } from "@/types/meal";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
@@ -57,3 +58,17 @@ export function patchProfile(payload: Partial<ProfilePayload>) {
   });
 }
 
+export function createMealRecord(payload: MealRecordPayload) {
+  return request<MealRecord>("/api/meals/record", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getTodayMealRecords() {
+  return request<MealRecord[]>("/api/meals/today");
+}
+
+export function getMealHistory(days = 7) {
+  return request<MealRecord[]>(`/api/meals/history?days=${days}`);
+}
